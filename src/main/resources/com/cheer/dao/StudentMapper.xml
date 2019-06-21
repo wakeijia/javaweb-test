@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace就是接口类-->
+<mapper namespace="com.cheer.dao.StudentMapper">
+    <!--开启二级缓存（分开关）-->
+    <cache></cache>
+
+    <!--    id是接口的方法名 useCache本条语句是否开启二级缓存-->
+
+    <select id="find" resultType="com.cheer.model.Student">
+        select * from student where studentNumber = #{studentNumber}
+    </select>
+
+
+    <update id="update">
+        update student
+        <trim prefix="set" suffixOverrides=",">
+            <if test="studentNumber!=studentNumber">
+                studentNumber = #{studentNumber}
+            </if>
+            <if test="password!=password">
+                password = #{password},
+            </if>
+            <if test="rights!=null">
+                rights = #{rights},
+            </if>
+            <if test="errors!=null">
+                errors = #{errors},
+            </if>
+            <if test="ignores!=null">
+                ignores=#{ignores},
+            </if>
+            <if test="scores!=null">
+                scores=#{scores}
+            </if>
+        </trim>
+        where studentNumber = #{studentNumber}
+    </update>
+
+
+</mapper>

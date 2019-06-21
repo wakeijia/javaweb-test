@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            margin: 50px auto 0 auto;
+            border-collapse: collapse;
+            text-align: center;
+            vertical-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            height: 30px;
+        }
+        th:nth-of-type(1){
+            width: 100px;
+        }
+        th:nth-of-type(2){
+            width: 500px;
+        }
+        th:nth-of-type(3){
+            width: 100px;
+        }
+        td:nth-of-type(1){
+            width: 100px;
+        }
+        td:nth-of-type(2){
+            width: 500px;
+        }
+        td:nth-of-type(3){
+            width: 100px;
+        }
+
+        button{
+            position: relative;
+            top: 40px;
+            left: 225px;
+            margin: 0px 10px;
+            width: 140px;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0;
+            background-color: #15a0ff;
+            color: white;
+        }
+
+    </style>
+
+</head>
+<body>
+<div id="header">
+
+    <button>考试题目导入</button>
+
+</div>
+
+<div id="body">
+    <table>
+
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $(function () {
+        let $tbody = $("<tbody></tbody>");
+
+        $("table").append($tbody);
+
+        let header =["序号","题干","题目内容"];
+        let headers =["id","question"];
+        let $headerTr = $("<tr></tr>");
+
+        $tbody.append($headerTr);
+
+        $.each(header,function (index , value) {
+            $headerTr.append("<th>"+ value +"</th>");
+        });
+
+        $("button").click(function () {
+
+            $.ajax({
+                url: "servlet/AdminIndexServlet",
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                    let $dataTr;
+                    for (let i = 0; i < response.length; i++) {
+                        $dataTr = $("<tr></tr>");
+                        $tbody.append($dataTr);
+                        let $dataTd;
+                        for (let j = 0; j < headers.length; j++) {
+                            $dataTd = $("<td></td>");
+                            $dataTr.append($dataTd);
+                            let property = headers[j];
+                            $dataTd.text(response[i][property]);
+                        }
+                        $dataTr.append("<td>详细内容</td>");
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #main{
+            margin: 0 auto;
+            width: 800px;
+            text-align: center;
+        }
+
+        button{
+            position: relative;
+            top: 50px;
+            margin: 0 30px;
+            width: 140px;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0;
+            background-color: #15a0ff;
+            color: white;
+        }
+
+        label{
+            display: inline-block;
+            min-width: 100px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="question">
+        <label><h3 id="a1"></h3></label>
+    </div>
+
+    <div id="option">
+        <div id="A">
+            <input type="radio" name="radio" id="01" value="A"><label><h4 id="a2"></h4></label>
+        </div>
+        <div id="B">
+            <input type="radio" name="radio" id="02" value="B"><label><h4 id="a3"></h4></label>
+        </div>
+        <div id="C">
+            <input type="radio" name="radio" id="03" value="C"><label><h4 id="a4"></h4></label>
+        </div>
+        <div id="D">
+            <input type="radio" name="radio" id="04" value="D"><label><h4 id="a5"></h4></label>
+        </div>
+    </div>
+
+    <div id="body">
+        <button id="up">上一题</button>
+        <button id="down">下一题</button>
+        <button id="over">交卷</button>
+    </div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    let num=0;
+    let check=new Array();
+    $(function () {
+
+        $.ajax({
+            url: "servlet/AdminIndexServlet",
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                a(response,num);
+            }
+        });
+
+        function a(response,num) {
+            $("#a1").html(response[num]["question"]);
+            $("#a2").html(response[num]["optionA"]);
+            $("#a3").html(response[num]["optionB"]);
+            $("#a4").html(response[num]["optionC"]);
+            $("#a5").html(response[num]["optionD"])
+        }
+
+        $("#down").click(function () {
+            //$("input[type='radio']").prop("checked","");
+            if($("#01").prop("checked")){
+                check[num] = $("#01").val();
+            }else if($("#02").prop("checked")){
+                check[num] = $("#02").val();
+            }else if($("#03").prop("checked")){
+                check[num] = $("#03").val();
+            }else if($("#04").prop("checked")){
+                check[num] = $("#04").val();
+            }else {
+                check[num] = "";
+            }
+
+            if(num===5){
+                return;
+            }
+            num++;
+            $.ajax({
+                url: "servlet/AdminIndexServlet",
+                dataType: "json",
+                method: "GET",
+                success: function (response) {
+                    a(response,num);
+                    $("input").prop("checked","");
+                    $("input[type='radio']").removeAttr("disabled");
+                }
+            });
+        });
+
+        $("#up").click(function () {
+            if("A"==check[num-1]){
+                $("#01").prop('checked','checked');
+            }else if("B"==check[num-1]){
+                $("#02").prop('checked','checked');
+            }else if("C"==check[num-1]){
+                $("#03").prop('checked','checked');
+            }else if("D"==check[num-1]){
+                $("#04").prop('checked','checked');
+            }
+            if(num===0||num>5){
+                return;
+            }
+            num--;
+
+            $.ajax({
+                url: "servlet/AdminIndexServlet",
+                dataType: "json",
+                method: "GET",
+                success: function (response) {
+                    a(response,num);
+                    $("input[type='radio']").attr("disabled","disabled");
+                }
+            });
+        });
+        
+        $("#over").click(function () {
+            if($("#01").prop("checked")){
+                check[num] = $("#01").val();
+            }else if($("#02").prop("checked")){
+                check[num] = $("#02").val();
+            }else if($("#03").prop("checked")){
+                check[num] = $("#03").val();
+            }else if($("#04").prop("checked")){
+                check[num] = $("#04").val();
+            }
+            $.ajax({
+                url : "servlet/ExamineeEndServlet",
+                data : {
+                    "radio" : check
+                },
+                async:false,
+                dataType : 'json',
+                type : "post",
+                traditional: true,
+                success : function(message) {
+                    if(message!=null){
+                        window.location.href="result.html";
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

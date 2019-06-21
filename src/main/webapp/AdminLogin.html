@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        #main{
+            margin: 0 auto;
+            position: relative;
+            top: 100px;
+            width: 600px;
+            height: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #body{
+            margin: 0 537px;
+            position: relative;
+            top: 220px;
+            width: 25%;
+            text-align: center;
+        }
+
+        button{
+            margin: 0px 10px;
+            width: 140px;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0;
+            background-color: #15a0ff;
+            color: white;
+        }
+
+        .row{
+            margin: 0 auto;
+            position: relative;
+            top: 190px;
+            text-align: center;
+            height: 30px;
+        }
+
+        label{
+            margin-right: 20px;
+        }
+
+        input{
+            width: 320px;
+            height: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="Form">
+    <Form action="servlet/AdminLoginServlet" method="post">
+        <div id="main">
+            <h1>江苏2018年小客车科目四考试</h1>
+        </div>
+        <div class="row">
+            <label for="username">账号</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div class="row">
+            <label for="password">密码</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <div id="body">
+            <button id="reset">重置</button>
+            <button id="login" type="submit">登录</button>
+        </div>
+    </Form>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        #main{
+            margin: 0 auto;
+            position: relative;
+            top: 100px;
+            width: 600px;
+            height: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #body{
+            margin: 0 auto;
+            position: relative;
+            top: 250px;
+            width: 25%;
+            text-align: center;
+        }
+
+        button{
+            margin: 0px 20px;
+            width: 120px;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0;
+            background-color: #15a0ff;
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <h1>江苏2018年小客车科目四考试</h1>
+</div>
+
+<div id="body">
+    <button id="admin">管理员登录</button>
+    <button id="examinee">考生登录</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        $("#admin").click(function () {
+            location.href = 'AdminLogin.html';
+        });
+
+        $("#examinee").click(function () {
+            // 跳转
+            location.href = 'ExamineeLogin.html';
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

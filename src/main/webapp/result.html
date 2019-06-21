@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        h1{
+            color: red;
+        }
+        table {
+            margin: 50px auto 0 auto;
+            border-collapse: collapse;
+            text-align: center;
+            vertical-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            width: 100px;
+            height: 30px;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+<div>
+    <h1 align="center">考试成绩单</h1>
+    <table>
+
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $(function () {
+        let url = "servlet/GetStudentServlet";
+        let header = ["准考证号", "答对", "答错", "漏答", "分数","是否合格"];
+        let student =["studentNumber","rights","errors","ignores","scores"]
+        let $tbody = $("<tbody></tbody>");
+        $("table").append($tbody);
+        let $headerTr = $("<tr></tr>");
+        $tbody.append($headerTr);
+        $.each(header,function (index , value) {
+            $headerTr.append("<th>"+ value +"</th>");
+        });
+
+        $.ajax({
+            url: url,
+            method:'GET',
+            dataType:"json",
+            success:function (respones) {
+                let $dataTr;
+                for (let i= 0; i < respones.length;i++){
+                    $dataTr = $("<tr></tr>");
+                    $tbody.append($dataTr);
+                    let $dataTd;
+                    for (let j = 0; j < student.length; j++) {
+                        $dataTd = $("<td></td>");
+                        $dataTr.append($dataTd);
+                        $dataTd.html(respones[i][student[j]]);
+                    }
+                    if(respones[i]["scores"]>=80){
+                        $dataTr.append("<td>合格</td>");
+                    }else {
+                        $dataTr.append("<td>不合格</td>");
+                    }
+                }
+            }
+        });
+
+
+    });
+
+
+</script>
+
+</body>
+</html>
