@@ -43,8 +43,10 @@ public class ExamineeEndServlet extends HttpServlet {
 
         int j = 0;
         int k = 0;
+        //设置一题20分
         int n = 20;
         int m = 0;
+
 
         for (int i = 0; i <ans.length ; i++) {
             if (ans[i].equals("")){
@@ -58,7 +60,7 @@ public class ExamineeEndServlet extends HttpServlet {
             }
         }
 
-        Student student = new Student(num,null, j , k , m , n*j);
+        Student student = new Student(num,null, j , k , m+(stringList.size()-ans.length) , n*j);
 
         StudentService studentService = new StudentServiceImpl();
         int upData = studentService.upData(student);

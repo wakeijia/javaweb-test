@@ -84,6 +84,123 @@
             $("#a5").html(response[num]["optionD"])
         }
 
+        function down(num){
+            if($("#01").prop("checked")){
+                check[num] = $("#01").val();
+            }else if($("#02").prop("checked")){
+                check[num] = $("#02").val();
+            }else if($("#03").prop("checked")){
+                check[num] = $("#03").val();
+            }else if($("#04").prop("checked")){
+                check[num] = $("#04").val();
+            }else if ($("input").prop("checked","")) {
+                check[num] = "";
+            }
+        }
+
+        $("#down").click(function () {
+
+            down(num);
+            if(num===5){
+                //$("input[type='radio']").attr("disabled","disabled");
+                return;
+            }
+            $("input").prop("checked","");
+            $.ajax({
+                url: "servlet/AdminIndexServlet",
+                dataType: "json",
+                method: "GET",
+                success: function (response) {
+
+                    num++;
+                    a(response,num);
+                    if(check[num]==null||check[num]===""){
+                        $("input[type='radio']").removeAttr("disabled");
+                    }
+                    up(num);
+                }
+            });
+
+        });
+
+        function up(num){
+            if("A"===check[num]){
+                $("#01").prop('checked','checked');
+                $("input[type='radio']").attr("disabled","disabled");
+            }else if("B"===check[num]){
+                $("#02").prop('checked','checked');
+                $("input[type='radio']").attr("disabled","disabled");
+            }else if("C"===check[num]){
+                $("#03").prop('checked','checked');
+                $("input[type='radio']").attr("disabled","disabled");
+            }else if("D"===check[num]){
+                $("#04").prop('checked','checked');
+                $("input[type='radio']").attr("disabled","disabled");
+            }else if(""===check[num]){
+                $("input").prop("checked","");
+                $("input[type='radio']").removeAttr("disabled");
+            }
+        }
+
+
+
+        $("#up").click(function () {
+            down(num);
+            if(check[num]!=null){
+                $("input[type='radio']").attr("disabled","disabled");
+            }
+            $.ajax({
+                url: "servlet/AdminIndexServlet",
+                dataType: "json",
+                method: "GET",
+                success: function (response) {
+                    if (num===0) {
+                        return;
+                    }
+                    $("input[type='radio']").removeAttr("disabled");
+                    num--;
+                    a(response,num);
+                    up(num);
+                }
+            });
+        });
+        
+        $("#over").click(function () {
+            down(num);
+            $.ajax({
+                url : "servlet/ExamineeEndServlet",
+                data : {
+                    "radio" : check
+                },
+                async:false,
+                dataType : 'json',
+                type : "post",
+                traditional: true,
+                success : function(message) {
+                    if(message!=null){
+                        window.location.href="result.html";
+                    }
+                }
+            });
+        });
+
+        /*$.ajax({
+            url: "servlet/AdminIndexServlet",
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                a(response,num);
+            }
+        });
+
+        function a(response,num) {
+            $("#a1").html(response[num]["question"]);
+            $("#a2").html(response[num]["optionA"]);
+            $("#a3").html(response[num]["optionB"]);
+            $("#a4").html(response[num]["optionC"]);
+            $("#a5").html(response[num]["optionD"])
+        }
+
         $("#down").click(function () {
             //$("input[type='radio']").prop("checked","");
             if($("#01").prop("checked")){
@@ -124,7 +241,7 @@
             }else if("D"==check[num-1]){
                 $("#04").prop('checked','checked');
             }
-            if(num===0||num>5){
+            if(num<1||num>5){
                 return;
             }
             num--;
@@ -139,7 +256,7 @@
                 }
             });
         });
-        
+
         $("#over").click(function () {
             if($("#01").prop("checked")){
                 check[num] = $("#01").val();
@@ -165,7 +282,7 @@
                     }
                 }
             });
-        });
+        });*/
     });
 </script>
 </body>

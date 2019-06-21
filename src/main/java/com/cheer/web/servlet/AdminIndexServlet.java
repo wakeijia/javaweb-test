@@ -23,6 +23,7 @@ public class AdminIndexServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(AdminIndexServlet.class);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
