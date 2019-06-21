@@ -27,7 +27,7 @@ public class AdminIndexServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
-        /*String file = "C:\\Users\\wakei\\Desktop\\题目.xlsx";
+        String file = "C:\\Users\\wakei\\Desktop\\题目.xlsx";
 
         ImportImpl importImpl = new ImportImpl();
         try {
@@ -35,7 +35,7 @@ public class AdminIndexServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServletException("导入失败");
-        }*/
+        }
         PrintWriter writer = response.getWriter();
         QuesService quesService = new QuesServiceImpl();
         List<Ques> quesList = quesService.getList();
